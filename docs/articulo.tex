@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel} % Configura el idioma en español para secciones y fechas
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm} % Márgenes estándar de tesis
+
+\title{\textbf{Umbral epidémico y transición de fase en el modelo SIR sobre grafos de Erdős–Rényi}}
+\author{\textbf{Martin Rojas Medrano}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\strut
+
+\begin{abstract}
+Este pre-proyecto de tesis formula un marco analítico y computacional para evaluar el fenómeno de transición de fase y el cálculo del umbral epidémico ($\tau$) en el modelo Susceptible-Infectado-Recuperado (SIR) implementado sobre grafos aleatorios de Erdős–Rényi $\mathcal{G}(n,p)$. A diferencia del enfoque epidemiológico clásico de mezcla homogénea, esta investigación incorpora la topología de redes estocásticas para capturar la heterogeneidad de los contactos interpersonales. Mediante simulaciones estocásticas de Montecarlo programadas en Python, se analiza la convergencia entre el inverso del radio espectral de la matriz de adyacencia y el punto crítico donde el sistema transiciona hacia un régimen epidémico global, validando la precisión del modelo estructurado frente a las aproximaciones continuas tradicionales.
+\end{abstract}
+
+\newpage
+
+\section{Capítulo I: El Problema de Investigación}
+
+\subsection{Descripción de la Realidad Problemática}
+La modelación matemática de enfermedades de transmisión infecciosa ha dependido tradicionalmente de los sistemas de ecuaciones diferenciales ordinarias bajo el supuesto de ``mezcla homogénea'' (modelo SIR clásico de Kermack y McKendrick). Esta aproximación asume una población idealizada donde cada individuo tiene exactamente la misma probabilidad de interactuar con cualquier otro. No obstante, en la realidad biológica y social, el contagio depende críticamente de una red estructurada de contactos. Al ignorar la topología real de las interacciones y asumir tasas de contacto uniformes, los modelos clásicos sobreestiman la velocidad de propagación y fallan en predecir el comportamiento local y crítico de un brote epidémico.
+
+Para mitigar esta limitación estructural, la epidemiología matemática moderna recurre a la teoría de redes complejas. El modelo de grafo aleatorio de Erdős–Rényi, denotado como $\mathcal{G}(n, p)$, constituye la aproximación fundamental para introducir aleatoriedad geométrica, donde $n$ representa los nodos (individuos) y $p$ la probabilidad independiente de enlace (contacto). En esta estructura abstracta, el proceso dinámico macroscópico de contagio queda supeditado a las propiedades espectrales de la red.
+
+Dentro de este sistema interactivo se manifiesta un fenómeno crítico de la física estadística conocido como \textit{transición de fase}. Cuando las tasas de la enfermedad cruzan el denominado \textbf{umbral epidémico} ($\tau$), el sistema experimenta un cambio cualitativo abrupto: pasa de un régimen subcrítico de extinción a un régimen supercrítico donde ocurre un brote a gran escala. El problema científico radica en que determinar analíticamente este umbral y el comportamiento de la transición requiere evaluar el radio espectral de matrices de adyacencia de gran escala, un desafío matemático que suele carecer de validación numérica robusta. 
+
+Por lo tanto, este trabajo surge ante la necesidad de resolver este vacío mediante el modelamiento y la simulación computacional estocástica, demostrando cuantitativamente cómo la inclusión de grafos aleatorios optimiza la predictibilidad del modelo SIR frente a las limitaciones del modelo clásico determinista.
+
+\subsection{Formulación del Problema}
+
+\subsubsection{Problema General}
+¿De qué manera la simulación computacional de la dinámica del modelo SIR sobre grafos aleatorios de Erdős–Rényi permite caracterizar cuantitativamente el umbral epidémico y el fenómeno de transición de fase frente a las aproximaciones del modelo clásico de mezcla homogénea?
+
+\subsubsection{Problemas Específicos}
+\begin{enumerate}
+    \item ¿Cómo determina la variación del tamaño del grafo ($n$) y de la probabilidad de conexión ($p$) el radio espectral ($\lambda_1$) de la matriz de adyacencia en redes de Erdős–Rényi?
+    \item ¿Cuál es el impacto de las tasas dinámicas de infección ($\beta$) y recuperación ($\gamma$) sobre el comportamiento estocástico de la propagación en las vecindades de la transición de fase?
+    \item ¿En qué medida el umbral epidémico teórico calculado analíticamente predice el punto de inflexión exacto donde la densidad final de recuperados ($R_\infty$) deja de ser cero en la simulación numérica?
+\end{enumerate}
+
+\subsection{Objetivos de la Investigación}
+
+\subsubsection{Objetivo General}
+Analizar cuantitativamente el umbral epidémico y el fenómeno de transición de fase en el modelo SIR a través de la simulación numérica estocástica sobre grafos aleatorios de Erdős–Rényi utilizando el lenguaje Python.
+
+\subsubsection{Objetivos Específicos}
+\begin{enumerate}
+    \item Calcular analítica y computacionalmente el radio espectral ($\lambda_1$) de la matriz de adyacencia de grafos de Erdős–Rényi bajo variaciones controladas de su conectividad.
+    \item Evaluar mediante simulación de Montecarlo la sensibilidad de las trayectorias de infección y recuperación frente a los límites críticos del sistema.
+    \item Validar experimentalmente la precisión del umbral epidémico teórico ($\tau = 1/\lambda_1$) contrastándolo con la densidad final de la población recuperada ($R_\infty$) obtenida en el entorno simulado.
+\end{enumerate}
+
+\subsection{Justificación de la Investigación}
+\begin{itemize}
+    \item \textbf{Justificación Teórica:} La investigación se justifica porque contrasta las limitaciones del supuesto clásico de mezcla homogénea con la teoría espectral de grafos aleatorios, demostrando cómo las propiedades de la matriz de adyacencia condicionan los umbrales de estabilidad analizados en la literatura epidemiológica contemporánea.
+    \item \textbf{Justificación Práctica y Computacional:} Permite diseñar un entorno algorítmico estocástico optimizado en Python (usando \texttt{NetworkX} y \texttt{NumPy}) que calcula transiciones de estado a nivel de nodos, ofreciendo una herramienta experimental exacta para el análisis de sistemas dinámicos sobre redes complejas sin requerir laboratorios biológicos.
+    \item \textbf{Justificación Social y Académica:} Si bien los resultados técnicos formarán parte de una presentación en la feria de proyectos de la facultad y servirán de material de consulta para estudiantes de ciclos inferiores, el proyecto aporta un modelo metodológico riguroso de replicabilidad computacional de la ciencia para la comunidad universitaria.
+\end{itemize}
+\newpage
+
+\section{Capítulo II: Marco Teórico}
+
+\subsection{Antecedentes de la Investigación}
+A continuación, se presentan los antecedentes metodológicos recuperados de repositorios académicos nacionales (ALICIA-CONCYTEC), estructurados bajo criterios de consistencia interna rigurosa para contextualizar la dinámica de propagación y las propiedades estructurales de las redes:
+
+\begin{itemize}
+    \item \textbf{Dinámicas Vitales en el Modelo SIR:} Flores (2024) investigó sobre la existencia y unicidad de la solución global positiva de un sistema tipo SIR clásico con incorporación de dinámicas vitales. Su objetivo fue demostrar matemáticamente la estabilidad y regularidad temporal de las soluciones biológicas factibles ante la presencia de tasas de natalidad y mortalidad. El diseño de la investigación fue teórico-analítico de corte cualitativo y cuantitativo basado en ecuaciones diferenciales ordinarias, aplicando el teorema del punto fijo de Banach y principios de positividad invariante. Las variables analizadas correspondieron a los compartimentos de la población (susceptibles, infectados y recuperados) regulados por parámetros demográficos. Los resultados evidenciaron que, bajo condiciones iniciales acotadas en el primer cuadrante, el sistema matemático posee una única solución global que no diverge ni se extingue caóticamente en tiempo finito. Concluyó que la incorporación de dinámicas vitales altera de forma determinista el comportamiento asintótico clásico, garantizando la convergencia hacia un equilibrio endémico estable siempre que el número de reproducción básico supere la unidad, lo cual establece el fundamento para mapear estos umbrales sobre topologías de red estocásticas.
+    
+    \item \textbf{Estabilidad Local y Tasas No Lineales:} Huapaya (2021) investigó sobre el análisis de estabilidad local de la dinámica COVID-19 de un modelo SIR con tasas de transmisión no lineal. El objetivo del estudio consistió en evaluar matemáticamente las condiciones críticas de propagación viral bajo funciones de contagio saturadas o no lineales asociadas a cambios de comportamiento social. El diseño metodológico fue de carácter básico, descriptivo-explicativo y analítico, haciendo uso del método de linealización de Hartman–Grobman y la teoría de estabilidad de Lyapunov. Los componentes analizados fueron las tasas de contacto variables y los puntos de equilibrio libre de enfermedad y endémico. Los resultados demostraron que cuando el número de reproducción elemental es menor o igual a uno, el punto libre de infección es local y asintóticamente estable; sin embargo, al introducir la no linealidad en la transmisión, surgen fenómenos de bifurcación que complican la extinción inmediata de la patología. Concluyó que la presencia de tasas de transmisión no lineales redefine drásticamente los umbrales de propagación, lo que implica que en un grafo aleatorio, la transición de fase hacia una epidemia global puede ocurrir de manera abrupta en densidades de conectividad menores a las estimadas por modelos lineales tradicionales.
+    
+    \item \textbf{Grafos Aleatorios Binomiales y Uniformes:} Alvarado (2023) investigó sobre el desvío moderado de conteo de triángulos en los modelos de grafos aleatorios uniforme y binomial. Su objetivo fue determinar y modelar las fluctuaciones probabilísticas en la densidad de subestructuras complejas, específicamente el conteo de triángulos, dentro de redes aleatorias. El diseño de la investigación fue puramente matemático y probabilístico de corte teórico, haciendo uso de herramientas avanzadas como la teoría de martingalas, desigualdades isoperimétricas y el principio de desvíos moderados en espacios abstractos. Los instrumentos de análisis formal fueron los modelos estructurales de grafos aleatorios uniformes $\mathcal{G}(n, m)$ y binomiales $\mathcal{G}(n, p)$, este último equivalente directo a la formulación clásica de Erdős–Rényi. Los resultados matemáticos evidenciaron que el comportamiento asintótico de las colas de probabilidad del conteo de triángulos sigue un decaimiento exponencial preciso gobernado por una función de tasa bien definida cuando el número de vértices tiende al infinito. Concluyó que las fluctuaciones locales en la densidad de aristas modifican de manera crítica la probabilidad de surgimiento de componentes conexos densos, aportando la herramienta estocástica exacta para identificar el comportamiento de percolación y la transición de fase en la conectividad global que sostiene la transmisión de un proceso epidemiológico tipo SIR.
+\end{itemize}
+
+\subsection{Bases Teóricas Científicas}
+
+\subsubsection{Limitaciones del Modelo SIR Clásico de Mezcla Homogénea}
+El modelo determinista clásico postula que una población de tamaño $N$ se divide en compartimentos ordenados: Susceptibles ($S(t)$), Infectados ($I(t)$) y Recuperados ($R(t)$). Bajo la hipótesis de mezcla homogénea, la probabilidad de contacto es uniforme y la cinética se rige por:
+\begin{equation}
+    \frac{dS}{dt} = -\frac{\beta S I}{N}, \quad \frac{dI}{dt} = \frac{\beta S I}{N} - \gamma I, \quad \frac{dR}{dt} = \gamma I
+\end{equation}
+Donde $\beta$ es la tasa de transmisión y $\gamma$ es la tasa de recuperación. El número de reproducción básico se define como $R_0 = \beta / \gamma$. La gran deficiencia metodológica de esta aproximación es que presupone un grafo completo oculto donde el grado de cada individuo es rígidamente $k = N-1$, ignorando el aislamiento físico y la estructura estocástica de los agrupamientos sociales reales.
+
+\subsubsection{Formalización del Grafo Aleatorio de Erdős–Rényi $\mathcal{G}(n,p)$}
+Para resolver el sesgo de homogeneidad, se introduce la formulación de Erdős–Rényi. Sea un conjunto de $n$ vértices indexados, donde cada par posible está interconectado mediante una arista de forma independiente con una probabilidad fija $p \in [0,1]$. La topología del sistema se mapea a través de una matriz de adyacencia simétrica $A \in \mathbb{R}^{n \times n}$, donde sus elementos aleatorios satisfacen:
+\begin{equation}
+    a_{ij} = \begin{cases} 1 & \text{con probabilidad } p \\ 0 & \text{con probabilidad } 1-p \end{cases}
+\end{equation}
+con la restricción $a_{ii} = 0$. El número medio de aristas esperadas es $\langle M \rangle = p \binom{n}{2}$ y el grado medio del grafo se denota como $\langle k \rangle = p(n-1)$.
+
+\subsubsection{Cinética del Modelo SIR sobre Redes y el Umbral Espectral}
+Al mapear el proceso dinámico sobre el grafo $\mathcal{G}$, los contagios individuales ocurren exclusivamente a través de los enlaces definidos en $A$. El estado microscópico de transmisión estocástica de un nodo $i$ en un tiempo infinitesimal $dt$ se modela probabilisticamente según:
+\begin{equation}
+    P(S_i \to I_i) = \beta \sum_{j=1}^{n} a_{ij} I_j(t) dt
+\end{equation}
+\begin{equation}
+    P(I_i \to R_i) = \gamma dt
+\end{equation}
+
+De acuerdo con la aproximación de campo medio espectral (Rocha, Carvalho \& Coimbra, 2023), la estabilidad lineal alrededor del punto crítico libre de enfermedad depende de los autovalores de la matriz de adyacencia. El estado infeccioso diverge exponencialmente detonando una epidemia masiva si y solo si se satisface la condición supercrítica:
+\begin{equation}
+    \frac{\beta}{\gamma} > \frac{1}{\lambda_1(A)}
+\end{equation}
+Donde $\lambda_1(A)$ corresponde al radio espectral (autovalor máximo de Frobenius-Perron) de la red. Por consiguiente, el umbral epidémico exacto del sistema estructurado está definido por:
+\begin{equation}
+    \tau = \frac{1}{\lambda_1(A)}
+\end{equation}
+Si la razón de transmisión biológica está por debajo del umbral $\tau$, el tamaño final de recuperados decae asintóticamente a la escala subcrítica ($\lim_{n \to \infty} R_\infty = 0$).
+
+\newpage
+
+\begin{thebibliography}{99}
+
+\bibitem{alvarado2023} 
+Alvarado Morales, J. D. (2023). \textit{Desvío moderado de conteo de triángulos en los modelos de grafos aleatorios uniforme y binomial} [Tesis de licenciatura, Universidad Nacional Mayor de San Marcos]. Repositorio Institucional Cybertesis UNMSM - ALICIA.
+
+\bibitem{flores2024} 
+Flores Fernandez, M. d. C. (2024). \textit{Existencia y unicidad de la solución global positiva de un sistema tipo SIR clásico con incorporación de dinámicas vitales} [Tesis de maestría, Universidad Nacional Mayor de San Marcos]. Repositorio Institucional Cybertesis UNMSM - ALICIA.
+
+\bibitem{huapaya2021} 
+Huapaya Quispe, J. (2021). \textit{Análisis de estabilidad local de la dinámica COVID-19 de un modelo SIR con tasas de transmisión no lineal} [Tesis de licenciatura, Universidad Nacional Mayor de San Marcos]. Repositorio Institucional Cybertesis UNMSM - ALICIA.
+
+\bibitem{rocha2023}
+Rocha, J. L., Carvalho, S., \& Coimbra, B. (2023). Probabilistic Procedures for SIR and SIS Epidemic Dynamics on Erdös-Rényi Contact Networks. \textit{Applied Math}, 3(4), 828-850.
+
+\end{thebibliography}
+\end{document}
